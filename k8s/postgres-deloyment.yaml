@@ -10,9 +10,24 @@ spec:
     metadata:
       labels:
         app: postgres
-    spec:
+    spec:    
+ # Defines the volume that will be used by the containers in the deployment.
+      volumes:                                   
+        - name: postgres-storage
+          persistentVolumeClaim: 
+            claimName: database-pvc
       containers:
       - name: postgres
         image: postgres
         ports:
-        - containerPort: 5432
+        - containerPort: 5432      
+        volumeMounts:                               #This part of the configuration mounts the volume inside the container.
+          - name: 'postgres-storage'                  #Should matches the name of the volume defined in the volumes section.
+            mountPath: '/var/lib/postgresql/data'     #This is the path inside the container where the volume will be mounted.PostgreSQL expects its data to be stored here by default.
+            subPath: 'postgres'                    #This specifies a subdirectory within the volume where the data will be stored. This allows you to use a specific directory within the volume rather than mounting the entire volume.
+        env:
+          - name: POSTGRES_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: pgpassword
+                key: PG_PASSWORD
