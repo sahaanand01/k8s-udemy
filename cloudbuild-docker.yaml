@@ -6,7 +6,7 @@ steps:
   entrypoint: 'bash'
   args: ['-c', 'ls']
 - name: 'gcr.io/cloud-builders/docker'
-  args: ['build', '-t', 'gcr.io/${_PROJECT_ID}/${_CLIENT_IMAGE_NAME}:${_CLIENT_VERSION}','client\Dockerfile']
+  args: ['build', '-t', 'gcr.io/${_PROJECT_ID}/${_CLIENT_IMAGE_NAME}:${_CLIENT_VERSION}', '-f', 'client/Dockerfile', '.']
 - name: 'gcr.io/cloud-builders/docker'
   args: ['build', '-t', 'gcr.io/${_PROJECT_ID}/${_SERVER_IMAGE_NAME}:${_SERVER_VERSION}','server\Dockerfile']
 - name: 'gcr.io/cloud-builders/docker'
