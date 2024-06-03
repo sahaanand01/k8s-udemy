@@ -1,7 +1,7 @@
 steps:
-- name: ubuntu
-  entryPoint: bash
-  arge: ["ls"]
+- name: 'ubuntu'
+  entrypoint: 'bash'
+  args: ['-c', 'ls']
 - name: 'gcr.io/cloud-builders/docker'
   args: ['build', '-t', 'gcr.io/${_PROJECT_ID}/${_CLIENT_IMAGE_NAME}:${_CLIENT_VERSION}','client/Dockerfile']
 - name: 'gcr.io/cloud-builders/docker'
