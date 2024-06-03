@@ -6,7 +6,7 @@ steps:
   - '--location=${_LOCATION}'
   - '--cluster=${_CLUSTER_NAME}'
 
-substituions:
+substitutions:
   _CLUSTER_NAME: multi-cluster
   _LOCATION: us-central1-c
   _FILE_PATH: k8s
