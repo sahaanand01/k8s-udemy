@@ -12,6 +12,13 @@ steps:
 - name: 'gcr.io/cloud-builders/docker'
   args: ['build', '-t', 'gcr.io/${_PROJECT_ID}/${_WORKER_IMAGE_NAME}:${_WORKER_VERSION}','-f', './worker/Dockerfile', './worker']
 
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['push', 'gcr.io/${_PROJECT_ID}/${_CLIENT_IMAGE_NAME}:${_CLIENT_VERSION}']
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['push', 'gcr.io/${_PROJECT_ID}/${_SERVER_IMAGE_NAME}:${_SERVER_VERSION}']
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['push', 'gcr.io/${_PROJECT_ID}/${_WORKER_IMAGE_NAME}:${_WORKER_VERSION}']
+
 # - name: "gcr.io/cloud-builders/gke-deploy"
 #   args:
 #   - run
@@ -24,6 +31,6 @@ substitutions:
   _CLIENT_IMAGE_NAME: multi-client
   _SERVER_IMAGE_NAME: multi-server
   _WORKER_IMAGE_NAME: multi-worker
-  _CLIENT_VERSION: c1.0
-  _SERVER_VERSION: s1.0
-  _WORKER_VERSION: w1.0
+  _CLIENT_VERSION: c2.0
+  _SERVER_VERSION: s2.0
+  _WORKER_VERSION: w2.0
