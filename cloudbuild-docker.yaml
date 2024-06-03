@@ -1,13 +1,16 @@
 steps:
 - name: 'gcr.io/cloud-builders/docker'
-  args: ['build', '-t', 'gcr.io/${_PROJECT_ID}/${_CLIENT_IMAGE_NAME}:${_VERSION}','client\Dockerfile']
+  args: ['build', '-t', 'gcr.io/${_PROJECT_ID}/${_CLIENT_IMAGE_NAME}:${_CLIENT_VERSION}','client\Dockerfile']
 - name: 'gcr.io/cloud-builders/docker'
-  args: ['build', '-t', 'gcr.io/${_PROJECT_ID}/${_SERVER_IMAGE_NAME}:${_VERSION}','server\Dockerfile']
+  args: ['build', '-t', 'gcr.io/${_PROJECT_ID}/${_SERVER_IMAGE_NAME}:${_SERVER_VERSION}','server\Dockerfile']
 - name: 'gcr.io/cloud-builders/docker'
-  args: ['build', '-t', 'gcr.io/${_PROJECT_ID}/${_WORKER_IMAGE_NAME}:${_VERSION}','worker\Dockerfile']
+  args: ['build', '-t', 'gcr.io/${_PROJECT_ID}/${_WORKER_IMAGE_NAME}:${_WORKER_VERSION}','worker\Dockerfile']
 
 substitutions:
   _PROJECT_ID: k8s-project-425213
   _CLIENT_IMAGE_NAME: multi-client
   _SERVER_IMAGE_NAME: multi-server
   _WORKER_IMAGE_NAME: multi-worker
+  _CLIENT_VERSION: c1.0
+  _SERVER_VERSION: s1.0
+  _WORKER_VERSION: w1.0
