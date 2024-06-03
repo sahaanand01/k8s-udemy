@@ -10,7 +10,7 @@ steps:
 - name: 'gcr.io/cloud-builders/docker'
   args: ['build', '-t', 'gcr.io/${_PROJECT_ID}/${_SERVER_IMAGE_NAME}:${_SERVER_VERSION}','-f', './server/Dockerfile', './server']
 - name: 'gcr.io/cloud-builders/docker'
-  args: ['build', '-t', 'gcr.io/${_PROJECT_ID}/${_WORKER_IMAGE_NAME}:${_WORKER_VERSION}','-f', './worker/Dockerfile', ',/worker']
+  args: ['build', '-t', 'gcr.io/${_PROJECT_ID}/${_WORKER_IMAGE_NAME}:${_WORKER_VERSION}','-f', './worker/Dockerfile', './worker']
 
 # - name: "gcr.io/cloud-builders/gke-deploy"
 #   args:
