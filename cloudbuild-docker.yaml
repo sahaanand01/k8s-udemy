@@ -1,13 +1,16 @@
 steps:
 - name: 'ubuntu'
   entrypoint: 'bash'
+  args: ['-c', 'cd', 'client']
+- name: 'ubuntu'
+  entrypoint: 'bash'
   args: ['-c', 'ls']
 - name: 'gcr.io/cloud-builders/docker'
-  args: ['build', '-t', 'gcr.io/${_PROJECT_ID}/${_CLIENT_IMAGE_NAME}:${_CLIENT_VERSION}','client/Dockerfile']
+  args: ['build', '-t', 'gcr.io/${_PROJECT_ID}/${_CLIENT_IMAGE_NAME}:${_CLIENT_VERSION}','client\Dockerfile']
 - name: 'gcr.io/cloud-builders/docker'
-  args: ['build', '-t', 'gcr.io/${_PROJECT_ID}/${_SERVER_IMAGE_NAME}:${_SERVER_VERSION}','server/Dockerfile']
+  args: ['build', '-t', 'gcr.io/${_PROJECT_ID}/${_SERVER_IMAGE_NAME}:${_SERVER_VERSION}','server\Dockerfile']
 - name: 'gcr.io/cloud-builders/docker'
-  args: ['build', '-t', 'gcr.io/${_PROJECT_ID}/${_WORKER_IMAGE_NAME}:${_WORKER_VERSION}','worker/Dockerfile']
+  args: ['build', '-t', 'gcr.io/${_PROJECT_ID}/${_WORKER_IMAGE_NAME}:${_WORKER_VERSION}','worker\Dockerfile']
 
 substitutions:
   _PROJECT_ID: k8s-project-425213
