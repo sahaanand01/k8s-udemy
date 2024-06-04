@@ -14,6 +14,6 @@ spec:
     spec:
       containers:
       - name: react-app
-        image: gcr.io/k8s-project-425213/react-app
+        image: anandageethan/react-app
         ports:
         - containerPort: 80
