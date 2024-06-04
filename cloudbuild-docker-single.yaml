@@ -3,7 +3,7 @@ steps:
   args: ['rev-parse','HEAD']
 
 - name: gcr.io/cloud-builders/docker
-  args: ['build', '-t','','-t','', 'f', './k8s-own/react/myapp/Dockerfile', './k8s-own/react/myapp']
+  args: ['build', '-t','gcr.io/${_PROJECT_ID}/${_IMAGE_NAME}:latest','-t','gcr.io/${_PROJECT_ID}/${_IMAGE_NAME}:$COMMIT_SHA', 'f', './k8s-own/react/myapp/Dockerfile', './k8s-own/react/myapp']
 
 - name: 'gcr.io/cloud-builders/docker'
   args: ['push', 'gcr.io/${_PROJECT_ID}/${_IMAGE_NAME}:latest']
