@@ -9,7 +9,7 @@ steps:
   args: ['build','-t', 'gcr.io/${_PROJECT_ID}/${_SERVER_IMAGE_NAME}:latest', '-t', 'gcr.io/${_PROJECT_ID}/${_SERVER_IMAGE_NAME}:$COMMIT_SHA','-f', './server/Dockerfile', './server']
 - name: 'gcr.io/cloud-builders/docker'
   args: ['build','-t', 'gcr.io/${_PROJECT_ID}/${_WORKER_IMAGE_NAME}:latest', '-t', 'gcr.io/${_PROJECT_ID}/${_WORKER_IMAGE_NAME}:$COMMIT_SHA','-f', './worker/Dockerfile', './worker']
-- name: 'gcr.io/cloud-builders/gke-deploy'
+- name: 'gcr.io/cloud-builders/docker'
   args: ['build', 't', 'gcr.io/${_PROJECT_ID}/${_REACT_IMAGE_NAME}:latest', '-t', 'gcr.io/${_PROJECT_ID}/${_REACT_IMAGE_NAME}:$COMMIT_SHA', '-f', './k8s-own/react/myapp/Dockerfile','./k8s-own/react/myapp']
 
 - name: 'gcr.io/cloud-builders/docker'
