@@ -13,12 +13,28 @@ RUN npm install
 # Build the app for production
 RUN npm run build
 
-# Use a lightweight web server to serve the static files
-FROM nginx:alpine
-COPY --from=0 /app/build /usr/share/nginx/html
+# Install a simple HTTP server to serve the static files
+RUN npm install -g http-server
 
-# Expose port 80 to the world outside this container
-EXPOSE 80
+# Expose port 8080 to the world outside this container
+EXPOSE 8080
 
-# Run nginx in the foreground
-CMD ["nginx", "-g", "daemon off;"]
+# Start the HTTP server
+CMD ["http-server", "build", "-p", "8080"]
+#===============================================================================
+# FROM node:14
+
+# WORKDIR /app
+
+# COPY . /app
+
+# RUN npm install
+
+# RUN npm run build
+
+# FROM nginx:alpine
+# COPY --from=0 /app/build /usr/share/nginx/html
+
+# EXPOSE 80
+
+# CMD ["nginx", "-g", "daemon off;"]
