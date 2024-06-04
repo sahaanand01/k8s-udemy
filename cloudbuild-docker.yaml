@@ -10,11 +10,11 @@ steps:
   args: ['rev-parse', 'HEAD']
 
 - name: 'gcr.io/cloud-builders/docker'
-  args: ['build', '-t', 'gcr.io/${_PROJECT_ID}/${_CLIENT_IMAGE_NAME}:$COMMIT_SHA ', '-f', './client/Dockerfile', './client']
+  args: ['build', '-t', 'gcr.io/${_PROJECT_ID}/${_CLIENT_IMAGE_NAME}:$COMMIT_SHA', '-f', './client/Dockerfile', './client']
 - name: 'gcr.io/cloud-builders/docker'
   args: ['build', '-t', 'gcr.io/${_PROJECT_ID}/${_SERVER_IMAGE_NAME}:$COMMIT_SHA','-f', './server/Dockerfile', './server']
 - name: 'gcr.io/cloud-builders/docker'
-  args: ['build', '-t', 'gcr.io/${_PROJECT_ID}/${_WORKER_IMAGE_NAME}:$$COMMIT_SHA','-f', './worker/Dockerfile', './worker']
+  args: ['build', '-t', 'gcr.io/${_PROJECT_ID}/${_WORKER_IMAGE_NAME}:$COMMIT_SHA','-f', './worker/Dockerfile', './worker']
 
 - name: 'gcr.io/cloud-builders/docker'
   args: ['push', 'gcr.io/${_PROJECT_ID}/${_CLIENT_IMAGE_NAME}:$COMMIT_SHA']
