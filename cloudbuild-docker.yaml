@@ -5,26 +5,23 @@ steps:
 - name: 'ubuntu'
   entrypoint: 'bash'
   args: ['-c', 'ls']
-- name: 'gcr.io/cloud-builders/docker'
-  args: ['build', '-t', 'gcr.io/${_PROJECT_ID}/${_CLIENT_IMAGE_NAME}:${_CLIENT_VERSION}', '-f', './client/Dockerfile', './client']
-- name: 'gcr.io/cloud-builders/docker'
-  args: ['build', '-t', 'gcr.io/${_PROJECT_ID}/${_SERVER_IMAGE_NAME}:${_SERVER_VERSION}','-f', './server/Dockerfile', './server']
-- name: 'gcr.io/cloud-builders/docker'
-  args: ['build', '-t', 'gcr.io/${_PROJECT_ID}/${_WORKER_IMAGE_NAME}:${_WORKER_VERSION}','-f', './worker/Dockerfile', './worker']
+
+- name: 'gcr.io/cloud-builders/git'
+  args: ['rev-parse', 'HEAD']
 
 - name: 'gcr.io/cloud-builders/docker'
-  args: ['push', 'gcr.io/${_PROJECT_ID}/${_CLIENT_IMAGE_NAME}:${_CLIENT_VERSION}']
+  args: ['build', '-t', 'gcr.io/${_PROJECT_ID}/${_CLIENT_IMAGE_NAME}:$COMMIT_SHA ', '-f', './client/Dockerfile', './client']
 - name: 'gcr.io/cloud-builders/docker'
-  args: ['push', 'gcr.io/${_PROJECT_ID}/${_SERVER_IMAGE_NAME}:${_SERVER_VERSION}']
+  args: ['build', '-t', 'gcr.io/${_PROJECT_ID}/${_SERVER_IMAGE_NAME}:$COMMIT_SHA','-f', './server/Dockerfile', './server']
 - name: 'gcr.io/cloud-builders/docker'
-  args: ['push', 'gcr.io/${_PROJECT_ID}/${_WORKER_IMAGE_NAME}:${_WORKER_VERSION}']
+  args: ['build', '-t', 'gcr.io/${_PROJECT_ID}/${_WORKER_IMAGE_NAME}:$$COMMIT_SHA','-f', './worker/Dockerfile', './worker']
 
-# - name: "gcr.io/cloud-builders/gke-deploy"
-#   args:
-#   - run
-#   - '--filename=k8s/'
-#   - '--location=us-central1-c'
-#   - '--cluster=multi-cluster'
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['push', 'gcr.io/${_PROJECT_ID}/${_CLIENT_IMAGE_NAME}:$COMMIT_SHA']
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['push', 'gcr.io/${_PROJECT_ID}/${_SERVER_IMAGE_NAME}:$COMMIT_SHA']
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['push', 'gcr.io/${_PROJECT_ID}/${_WORKER_IMAGE_NAME}:$COMMIT_SHA']
 
 substitutions:
   _PROJECT_ID: k8s-project-425213
