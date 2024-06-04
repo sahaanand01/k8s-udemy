@@ -9,6 +9,8 @@ steps:
   args: ['build','-t', 'gcr.io/${_PROJECT_ID}/${_SERVER_IMAGE_NAME}:latest', '-t', 'gcr.io/${_PROJECT_ID}/${_SERVER_IMAGE_NAME}:$COMMIT_SHA','-f', './server/Dockerfile', './server']
 - name: 'gcr.io/cloud-builders/docker'
   args: ['build','-t', 'gcr.io/${_PROJECT_ID}/${_WORKER_IMAGE_NAME}:latest', '-t', 'gcr.io/${_PROJECT_ID}/${_WORKER_IMAGE_NAME}:$COMMIT_SHA','-f', './worker/Dockerfile', './worker']
+- name: 'gcr.io/cloud-builders/gke-deploy'
+  args: ['build', 't', 'gcr.io/${_PROJECT_ID}/${_REACT_IMAGE_NAME}:latest', '-t', 'gcr.io/${_PROJECT_ID}/${_REACT_IMAGE_NAME}:$COMMIT_SHA', '-f', './k8s-own/react/myapp/Dockerfile','./k8s-own/react/myapp']
 
 - name: 'gcr.io/cloud-builders/docker'
   args: ['push', 'gcr.io/${_PROJECT_ID}/${_CLIENT_IMAGE_NAME}:latest']
@@ -25,6 +27,11 @@ steps:
 - name: 'gcr.io/cloud-builders/docker'
   args: ['push', 'gcr.io/${_PROJECT_ID}/${_WORKER_IMAGE_NAME}:$COMMIT_SHA']
 
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['push', 'gcr.io/${_PROJECT_ID}/${_REACT_IMAGE_NAME}:latest']
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['push', 'gcr.io/${_PROJECT_ID}/${_REACT_IMAGE_NAME}:$COMMIT_SHA']
+
 # - name: "gcr.io/cloud-builders/gke-deploy"
 #   when: 'exitCode == 0'
 #   args:
@@ -38,6 +45,7 @@ substitutions:
   _CLIENT_IMAGE_NAME: multi-client
   _SERVER_IMAGE_NAME: multi-server
   _WORKER_IMAGE_NAME: multi-worker
+  _REACT_IMAGE_NAME: react-app
   _CLUSTER_NAME: multi-cluster
   _LOCATION: us-central1-c
   _FILE_PATH: k8s
