@@ -28,6 +28,6 @@ spec:
             pathType: ImplementationSpecific
             backend:
               service:
-                name: redis-cluster-ip-service
+                name: react-cluster-ip-service
                 port: 
                   number: 80
