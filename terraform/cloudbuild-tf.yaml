@@ -1,4 +1,16 @@
 steps:
+# - name: 'gcr.io/cloud-builders/gsutil'
+#   args: ['cp', '${_SERVICE_ACCOUNT_KEY_FILE}', 'service-account-key.json']
+
+# - name: 'gcr.io/cloud-builders/gcloud'
+#   entrypoint: 'bash'
+#   args:
+#     - '-c'
+#     - 'export GOOGLE_APPLICATION_CREDENTIALS=${_GOOGLE_APPLICATION_CREDENTIALS} && terraform init'
+
+# - name: 'gcr.io/cloud-builders/terraform'
+#   args: ['plan']
+
 - name: 'gcr.io/cloud-builders/gcloud'
   entrypoint: 'bash'
   args:
@@ -44,5 +56,8 @@ steps:
 
 # Define substitutions for environment variables
 substitutions:
-  _GOOGLE_APPLICATION_CREDENTIALS: 'terraform\credentials\k8s-project-425213-b9f5dc4dc5b6.json'
-  _TF_STATE_BUCKET: 'terraform-state-bucket-bkup'
+  _SERVICE_ACCOUNT_KEY_FILE: gs://your-bucket-name/path/to/service-account-key.json
+  _GOOGLE_APPLICATION_CREDENTIALS: 'gs://terraform-state-bucket-bkup/credentials/k8s-project-425213-b9f5dc4dc5b6.json'
+  _TF_STATE_BUCKET: 'terraform-state-bucket-bkup/stateFiles'
+
+
