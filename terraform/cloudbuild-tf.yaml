@@ -29,6 +29,7 @@ steps:
   - '-c'
   - |
     echo "Initializing Terraform"
+    cd terraform
     terraform init \
       -backend-config="bucket=${_TF_STATE_BUCKET}" \
       -backend-config="prefix=terraform/state"
@@ -39,6 +40,7 @@ steps:
   - '-c'
   - |
     echo "Planning Terraform"
+    cd terraform
     terraform plan -out=tfplan
 
 - name: 'hashicorp/terraform:light'
@@ -47,6 +49,7 @@ steps:
   - '-c'
   - |
     echo "Applying Terraform"
+    cd terraform
     terraform apply -auto-approve tfplan
 
 # Optional: Clean up the tfplan file
