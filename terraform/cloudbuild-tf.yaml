@@ -1,0 +1,48 @@
+steps:
+- name: 'gcr.io/cloud-builders/gcloud'
+  entrypoint: 'bash'
+  args:
+  - '-c'
+  - |
+    echo "Setting up environment variables"
+    export GOOGLE_APPLICATION_CREDENTIALS="${_GOOGLE_APPLICATION_CREDENTIALS}"
+
+- name: 'hashicorp/terraform:light'
+  entrypoint: 'sh'
+  args:
+  - '-c'
+  - |
+    echo "Initializing Terraform"
+    terraform init \
+      -backend-config="bucket=${_TF_STATE_BUCKET}" \
+      -backend-config="prefix=terraform/state"
+
+- name: 'hashicorp/terraform:light'
+  entrypoint: 'sh'
+  args:
+  - '-c'
+  - |
+    echo "Planning Terraform"
+    terraform plan -out=tfplan
+
+- name: 'hashicorp/terraform:light'
+  entrypoint: 'sh'
+  args:
+  - '-c'
+  - |
+    echo "Applying Terraform"
+    terraform apply -auto-approve tfplan
+
+# Optional: Clean up the tfplan file
+- name: 'gcr.io/cloud-builders/gcloud'
+  entrypoint: 'bash'
+  args:
+  - '-c'
+  - |
+    echo "Cleaning up"
+    rm tfplan
+
+# Define substitutions for environment variables
+substitutions:
+  _GOOGLE_APPLICATION_CREDENTIALS: 'terraform\credentials\k8s-project-425213-b9f5dc4dc5b6.json'
+  _TF_STATE_BUCKET: 'terraform-state-bucket-bkup'
