@@ -1,5 +1,6 @@
 options:
-  logsBucket: ci-cd-build-and-deployment-logs-bucket
+  env:
+    - 'CLOUD_BUILD_LOGS_BUCKET=gs://ci-cd-build-and-deployment-logs-bucket'
 steps:
 # - name: 'gcr.io/cloud-builders/gsutil'
 #   args: ['cp', '${_SERVICE_ACCOUNT_KEY_FILE}', 'service-account-key.json']
