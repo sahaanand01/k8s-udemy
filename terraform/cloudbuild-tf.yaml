@@ -13,7 +13,7 @@ steps:
 
 - name: ubuntu
   entrypoint: 'bash'
-  args: ['c', 'ls']
+  args: ['-c', 'ls']
 
 - name: 'gcr.io/cloud-builders/gcloud'
   entrypoint: 'bash'
