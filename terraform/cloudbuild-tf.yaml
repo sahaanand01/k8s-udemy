@@ -1,3 +1,5 @@
+options:
+  logging: NONE
 steps:
 - name: ubuntu
   entrypoint: 'bash'
