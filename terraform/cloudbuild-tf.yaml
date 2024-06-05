@@ -19,7 +19,7 @@ steps:
     echo "Initializing Terraform"
     cd terraform
     terraform init \
-      -backend-config="bucket=${_TF_STATE_BUCKET}"
+      -backend-config="bucket=${_TF_STATE_BUCKET}" \
       -backend-config="prefix=terraform/state"
 
 - name: 'hashicorp/terraform:light'
