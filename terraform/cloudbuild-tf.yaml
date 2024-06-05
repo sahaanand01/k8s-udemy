@@ -1,5 +1,5 @@
 options:
-  logging: CLOUD_LOGGING_ONLY
+  defaultLogsBucketBehavior: REGIONAL_USER_OWNED_BUCKET
 steps:
 # - name: 'gcr.io/cloud-builders/gsutil'
 #   args: ['cp', '${_SERVICE_ACCOUNT_KEY_FILE}', 'service-account-key.json']
