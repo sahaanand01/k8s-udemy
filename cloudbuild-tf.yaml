@@ -31,12 +31,9 @@ steps:
   args:
   - '-c'
   - |
-    if [ "${_ACTION}" = "apply" ]; then
-      echo "Planning Terraform"
-      cd terraform
-      terraform plan
-    else
-      DESTROYING NOT APPLYING
+    echo "Planning Terraform"
+    cd terraform
+    terraform plan
 
 - name: 'hashicorp/terraform:light'
   id: Apply
@@ -44,25 +41,9 @@ steps:
   args:
   - '-c'
   - |
-    if [ "${_ACTION}" = "apply" ]; then
-      echo "Applying Terraform"
-      cd terraform
-      terraform apply -auto-approve
-    else
-      echo DESTROYING NOT APPLYING
-
-- name: 'hashicorp/terraform:light'
-  id: Destroy
-  entrypoint: 'sh'
-  args:
-  - '-c'
-  - |
-    if [ "${_ACTION}" = "Destroy" ]; then
-      cd terraform
-      terraform destroy -auto-approve
-    else
-      echo PROVISIONING NOT DESTROYING
-
+    echo "Applying Terraform"
+    cd terraform
+    terraform apply -auto-approve
 
 # Optional: Clean up the tfplan file
 # - name: 'gcr.io/cloud-builders/gcloud'
@@ -76,6 +57,6 @@ steps:
 # Define substitutions for environment variables
 substitutions:
   _GOOGLE_APPLICATION_CREDENTIALS: 'gs://terraform-state-bucket-bkup/credentials/k8s-project-425213-b9f5dc4dc5b6.json'
-  _TF_STATE_BUCKET: 'gs:/terraform-state-bucket-bkup/stateFiles'
+  _TF_STATE_BUCKET: 'gs://terraform-state-bucket-bkup/stateFiles'
 
 
