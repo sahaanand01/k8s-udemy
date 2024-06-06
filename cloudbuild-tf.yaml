@@ -57,7 +57,7 @@ steps:
   args:
   - '-c'
   - |
-    if [ "${_ACTION}" = "Destroy" ]; then
+    if [ "${_ACTION}" = "destroy" ]; then
       cd terraform
       terraform destroy -auto-approve
     else
