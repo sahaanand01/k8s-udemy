@@ -1,4 +1,5 @@
 steps:
+
 - name: 'gcr.io/cloud-builders/git'
   args: ['rev-parse','HEAD']
 
