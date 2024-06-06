@@ -1,13 +1,13 @@
-# apiVersion: cert-manager.io/v1 
-# kind: Certificate
-# metadata:  
-#   name: yourdomain-com-tls
-# spec:  
-#   secretName: yourdomain-com
-#   issuerRef:
-#     name: letsencrypt-prod
-#     kind: ClusterIssuer
-#   commonName: gtnrjlkhm.shop
-#   dnsNames:
-#     - gtnrjlkhm.shop
-#     - www.gtnrjlkhm.shop
+apiVersion: cert-manager.io/v1 
+kind: Certificate
+metadata:  
+  name: gtnrjlkhm-tls
+spec:  
+  secretName: gtnrjlkhm-shop
+  issuerRef:
+    name: letsencrypt-prod
+    kind: ClusterIssuer
+  commonName: gtnrjlkhm.shop
+  dnsNames:
+    - gtnrjlkhm.shop
+    - www.gtnrjlkhm.shop
