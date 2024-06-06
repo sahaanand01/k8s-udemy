@@ -14,6 +14,7 @@ steps:
     export GOOGLE_APPLICATION_CREDENTIALS="${_GOOGLE_APPLICATION_CREDENTIALS}"
 
 - name: 'hashicorp/terraform:light'
+  id: Init
   entrypoint: 'sh'
   args:
   - '-c'
@@ -25,22 +26,43 @@ steps:
       -backend-config="prefix=terraform/state"
 
 - name: 'hashicorp/terraform:light'
+  id: Plan
   entrypoint: 'sh'
   args:
   - '-c'
   - |
-    echo "Planning Terraform"
-    cd terraform
-    terraform plan
+    if [ "${_ACTION}" = "apply" ]; then
+      echo "Planning Terraform"
+      cd terraform
+      terraform plan
+    else
+      DESTROYING NOT APPLYING
 
 - name: 'hashicorp/terraform:light'
+  id: Apply
   entrypoint: 'sh'
   args:
   - '-c'
   - |
-    echo "Applying Terraform"
-    cd terraform
-    terraform apply -auto-approve
+    if [ "${_ACTION}" = "apply" ]; then
+      echo "Applying Terraform"
+      cd terraform
+      terraform apply -auto-approve
+    else
+      echo DESTROYING NOT APPLYING
+
+- name: 'hashicorp/terraform:light'
+  id: Destroy
+  entrypoint: 'sh'
+  args:
+  - '-c'
+  - |
+    if [ "${_ACTION}" = "Destroy" ]; then
+      cd terraform
+      terraform destroy -auto-approve
+    else
+      echo PROVISIONING NOT DESTROYING
+
 
 # Optional: Clean up the tfplan file
 # - name: 'gcr.io/cloud-builders/gcloud'
@@ -54,6 +76,6 @@ steps:
 # Define substitutions for environment variables
 substitutions:
   _GOOGLE_APPLICATION_CREDENTIALS: 'gs://terraform-state-bucket-bkup/credentials/k8s-project-425213-b9f5dc4dc5b6.json'
-  _TF_STATE_BUCKET: 'terraform-state-bucket-bkup/stateFiles'
+  _TF_STATE_BUCKET: 'gs:/terraform-state-bucket-bkup/stateFiles'
 
 
