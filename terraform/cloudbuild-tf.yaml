@@ -1,3 +1,5 @@
+options:
+  logging: NONE
 steps:
 - name: ubuntu
   entrypoint: 'bash'
@@ -29,7 +31,7 @@ steps:
   - |
     echo "Planning Terraform"
     cd terraform
-    terraform plan -out=tfplan
+    terraform plan
 
 - name: 'hashicorp/terraform:light'
   entrypoint: 'sh'
@@ -38,16 +40,16 @@ steps:
   - |
     echo "Applying Terraform"
     cd terraform
-    terraform apply -auto-approve tfplan
+    terraform apply -auto-approve
 
 # Optional: Clean up the tfplan file
-- name: 'gcr.io/cloud-builders/gcloud'
-  entrypoint: 'bash'
-  args:
-  - '-c'
-  - |
-    echo "Cleaning up"
-    rm tfplan
+# - name: 'gcr.io/cloud-builders/gcloud'
+#   entrypoint: 'bash'
+#   args:
+#   - '-c'
+#   - |
+#     echo "Cleaning up"
+#     rm tfplan
 
 # Define substitutions for environment variables
 substitutions:
