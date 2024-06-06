@@ -1,0 +1,32 @@
+options:
+  logging: NONE
+
+steps:
+
+- name: 'gcr.io/cloud-builders/gcloud'
+  entrypoint: 'bash'
+  args:
+  - '-c'
+  - |
+    echo "Setting up environment variables"
+    export GOOGLE_APPLICATION_CREDENTIALS="${_GOOGLE_APPLICATION_CREDENTIALS}"
+
+- name: 'hashicorp/terraform:light'
+  id: Init
+  entrypoint: 'sh'
+  args:
+  - '-c'
+  - |
+    echo "Initializing Terraform"
+    cd terraform
+    terraform init
+
+- name: 'hashicorp/terraform:light'
+  id: Destroy
+  entrypoint: 'sh'
+  args:
+  - '-c'
+  - |
+    echo "Destroying Terraform"
+    cd terraform
+    terraform destroy -auto-approve
