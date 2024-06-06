@@ -24,10 +24,3 @@ spec:
                 name: server-cluster-ip-service
                 port:
                   number: 5000
-          - path: /react/?(.*)
-            pathType: ImplementationSpecific
-            backend:
-              service:
-                name: react-cluster-ip-service
-                port: 
-                  number: 8080
