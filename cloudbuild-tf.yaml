@@ -56,5 +56,3 @@ steps:
 substitutions:
   _GOOGLE_APPLICATION_CREDENTIALS: 'gs://terraform-state-bucket-bkup/credentials/k8s-project-425213-b9f5dc4dc5b6.json'
   _TF_STATE_BUCKET: 'gs://terraform-state-bucket-bkup/stateFiles'
-
-

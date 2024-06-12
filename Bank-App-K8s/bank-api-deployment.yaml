@@ -24,4 +24,4 @@ spec:
           - name: DB_USERNAME
             value: admin
           - name: DB_PASSWORD
-            value: roto
+            value: root
