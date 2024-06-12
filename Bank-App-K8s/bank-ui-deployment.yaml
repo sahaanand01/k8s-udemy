@@ -1,0 +1,18 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bank-ui-deployment
+spec:
+  selector:
+    matchLabels:
+      app: bank-ui
+  template:
+    metadata:
+      labels:
+        app: bank-ui
+    spec:
+      containers:
+      - name: myapp
+        image: anandageethan/bank-ui:latest
+        ports:
+        - containerPort: 9090

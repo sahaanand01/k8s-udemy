@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: bank-api-cluster-service
+spec:
+  selector:
+    app: bank-api
+  ports:
+  - port: 9090
+    targetPort: 9090
+  type: ClusterIP
