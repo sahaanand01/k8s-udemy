@@ -17,7 +17,7 @@ spec:
             claimName: mysql-pvc
       containers:
       - name: myapp
-        image: mysql
+        image: anandageethan/bank-db:latest
         ports:
         - containerPort: 3306
         volumeMounts:
@@ -30,6 +30,6 @@ spec:
           - name: MYSQL_DATABASE
             value: claimmanagement
           - name: MYSQL_USER
-            value: admin
+            value: anand
           - name: MYSQL_PASSWORD
-            value: root
+            value: 'password'
