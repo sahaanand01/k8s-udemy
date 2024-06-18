@@ -18,12 +18,31 @@ spec:
         - containerPort: 9090
         env:
           - name: DB_HOST
-            value: mysql
+            valueFrom:
+              configMapKeyRef:
+                name: bank-app-config
+                key: db_host
+                
           - name: DB_PORT
-            value: '3306'
+            valueFrom:
+              configMapKeyRef:
+                name: bank-app-config
+                key: mysql_port
+
           - name: DB_NAME
-            value: claimmanagement
+            valueFrom:
+              configMapKeyRef:
+                name: bank-app-config
+                key: mysql_database
+
           - name: DB_USERNAME
-            value: anand
+            valueFrom:
+              configMapKeyRef:
+                name: bank-app-config
+                key: mysql_username
+
           - name: DB_PASSWORD
-            value: password
+            valueFrom:
+              secretKeyRef:
+                name: bank-secret
+                key: mysql_password

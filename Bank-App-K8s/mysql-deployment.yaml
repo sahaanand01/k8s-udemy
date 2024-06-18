@@ -11,13 +11,9 @@ spec:
       labels:
         app: mysql
     spec:
-      volumes:                                   
-        - name: mysql-storage
-          persistentVolumeClaim: 
-            claimName: mysql-pvc
       containers:
-      - name: myapp
-        image: anandageethan/bank-db:latest
+      - name: mysql
+        image: anandageethan/bank-db:root-latest
         ports:
         - containerPort: 3306
         volumeMounts:
@@ -26,10 +22,48 @@ spec:
             subPath: 'mysql'
         env:
           - name: MYSQL_ROOT_PASSWORD
-            value: root
+            valueFrom:
+              secretKeyRef:
+                name: bank-secret
+                key: mysql_root_password
+
           - name: MYSQL_DATABASE
-            value: claimmanagement
+            valueFrom:
+              configMapKeyRef:
+                name: bank-app-config
+                key: mysql_database
+
           - name: MYSQL_USER
-            value: anand
+            valueFrom:
+              configMapKeyRef:
+                name: bank-app-config
+                key: mysql_username
+
           - name: MYSQL_PASSWORD
-            value: 'password'
+            valueFrom:
+              secretKeyRef:
+                name: bank-secret
+                key: mysql_password
+      initContainers:
+      - name: init-mysql
+        image: mysql:latest
+        command: ['sh', '-c', 'until mysql -h127.0.0.1 -uroot -prootpassword -e "SELECT 1"; do sleep 5; done']
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: bank-secret
+              key: mysql_root_password
+        volumeMounts:
+        - name: init-script
+          mountPath: /docker-entrypoint-initdb.d
+      
+      
+      volumes:                                   
+        - name: mysql-storage
+          persistentVolumeClaim: 
+            claimName: mysql-pvc
+
+        - name: init-script
+          configMap:
+            name: mysql-init-script
