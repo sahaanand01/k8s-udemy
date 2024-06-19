@@ -1,0 +1,36 @@
+version: '3'
+services:
+  mysql-service:
+    image: mysql
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: "SanandSinferno@2"
+      MYSQL_DATABASE: "claimmanagement"
+      MYSQL_USER: "anand"
+      MYSQL_PASSWORD: "GeethanS@2"
+  
+  bank-api:
+    image: anandageethan/bank-api:latest
+    ports:
+      - '9090:9090'
+    restart: always
+    environment:
+      DB_HOST: "mysql-service"
+      DB_PORT: "3306"
+      DB_NAME:  "claimmanagement"
+      DB_USERNAME: "anand"
+      DB_PASSWORD: "GeethanS@2"
+    depends_on:
+      - mysql-service
+  
+  bank-ui:
+    image: anandageethan/bank-ui:latest
+    ports:
+      - '80:80'
+    environment:
+      REACT_APP_API_BACKEND_URL: "http://bank-api:9090"
+    depends_on:
+      - mysql-service
+      - bank-api
+

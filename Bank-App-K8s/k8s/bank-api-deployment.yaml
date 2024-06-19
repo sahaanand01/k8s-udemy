@@ -18,27 +18,28 @@ spec:
         - containerPort: 9090
         env:
           - name: DB_HOST
-            valueFrom:
-              configMapKeyRef:
-                name: bank-app-config
-                key: db_host
+            value: 'mysql-cluster-service'
+            # valueFrom:
+            #   configMapKeyRef:
+            #     name: bank-config
+            #     key: db_host
                 
           - name: DB_PORT
             valueFrom:
               configMapKeyRef:
-                name: bank-app-config
+                name: bank-config
                 key: mysql_port
 
           - name: DB_NAME
             valueFrom:
               configMapKeyRef:
-                name: bank-app-config
+                name: bank-config
                 key: mysql_database
 
           - name: DB_USERNAME
             valueFrom:
               configMapKeyRef:
-                name: bank-app-config
+                name: bank-config
                 key: mysql_username
 
           - name: DB_PASSWORD

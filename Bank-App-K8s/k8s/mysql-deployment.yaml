@@ -13,13 +13,14 @@ spec:
     spec:
       containers:
       - name: mysql
-        image: anandageethan/bank-db:root-latest
+        image: mysql
         ports:
         - containerPort: 3306
         volumeMounts:
           - name: mysql-storage
             mountPath: '/var/lib/mysql'
             subPath: 'mysql'
+
         env:
           - name: MYSQL_ROOT_PASSWORD
             valueFrom:
@@ -30,13 +31,13 @@ spec:
           - name: MYSQL_DATABASE
             valueFrom:
               configMapKeyRef:
-                name: bank-app-config
+                name: bank-config
                 key: mysql_database
 
           - name: MYSQL_USER
             valueFrom:
               configMapKeyRef:
-                name: bank-app-config
+                name: bank-config
                 key: mysql_username
 
           - name: MYSQL_PASSWORD
@@ -44,21 +45,7 @@ spec:
               secretKeyRef:
                 name: bank-secret
                 key: mysql_password
-      initContainers:
-      - name: init-mysql
-        image: mysql:latest
-        command: ['sh', '-c', 'until mysql -h127.0.0.1 -uroot -prootpassword -e "SELECT 1"; do sleep 5; done']
-        env:
-        - name: MYSQL_ROOT_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: bank-secret
-              key: mysql_root_password
-        volumeMounts:
-        - name: init-script
-          mountPath: /docker-entrypoint-initdb.d
-      
-      
+                
       volumes:                                   
         - name: mysql-storage
           persistentVolumeClaim: 
