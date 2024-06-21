@@ -2,7 +2,7 @@ version: '3'
 services:
   mysql-service:
     image: mysql
-    ports:
+    ports:    
       - "3306:3306"
     environment:
       MYSQL_ROOT_PASSWORD: "SanandSinferno@2"
@@ -11,7 +11,7 @@ services:
       MYSQL_PASSWORD: "GeethanS@2"
   
   bank-api:
-    image: anandageethan/bank-api:latest
+    image: anandageethan/bank-api
     ports:
       - '9090:9090'
     restart: always
@@ -23,14 +23,25 @@ services:
       DB_PASSWORD: "GeethanS@2"
     depends_on:
       - mysql-service
-  
+
   bank-ui:
-    image: anandageethan/bank-ui:latest
+    image: anandageethan/bank-ui
     ports:
-      - '80:80'
+      - '3000:3000'
+    restart: always
     environment:
-      REACT_APP_API_BACKEND_URL: "http://bank-api:9090"
+      REACT_APP_API_BACKEND_URL: "http://localhost:9090"
     depends_on:
       - mysql-service
       - bank-api
+
+  # nginx-service:
+  #   build:
+  #     context: /nginx/
+  #     dockerfile: Dockerfile
+  #   ports:
+  #     - '80:80'
+  #   depends_on:
+  #     - bank-ui
+  #     - bank-api
 
