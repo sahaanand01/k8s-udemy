@@ -50,7 +50,3 @@ spec:
         - name: mysql-storage
           persistentVolumeClaim: 
             claimName: mysql-pvc
-
-        - name: init-script
-          configMap:
-            name: mysql-init-script

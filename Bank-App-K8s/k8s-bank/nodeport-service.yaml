@@ -4,9 +4,9 @@ metadata:
   name: node-port-service
 spec:
   selector:
-    app: bank-api
+    app: bank-ui
   ports:
-  - port: 80
-    targetPort: 9090
-    nodePort: 30124
+  - port: 81
+    targetPort: 80
+    nodePort: 30123
   type: NodePort

@@ -6,4 +6,5 @@ data:
   mysql_username: anand
   mysql_port: '3306'
   mysql_database: claimmanagement
-  db_host: mysql
+  db_host: 'mysql-cluster-service'
+  allowed_cross_origin: 'http://localhost:30123'

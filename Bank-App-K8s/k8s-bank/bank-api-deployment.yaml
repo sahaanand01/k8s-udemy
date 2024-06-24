@@ -17,12 +17,17 @@ spec:
         ports:
         - containerPort: 9090
         env:
+          - name: ALLOWED_CROSS_ORIGIN
+            valueFrom:
+              configMapKeyRef:
+                name: bank-config
+                key: allowed_cross_origin
+
           - name: DB_HOST
-            value: 'mysql-cluster-service'
-            # valueFrom:
-            #   configMapKeyRef:
-            #     name: bank-config
-            #     key: db_host
+            valueFrom:
+              configMapKeyRef:
+                name: bank-config
+                key: db_host
                 
           - name: DB_PORT
             valueFrom:

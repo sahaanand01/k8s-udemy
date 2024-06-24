@@ -25,12 +25,10 @@ services:
       - mysql-service
 
   bank-ui:
-    image: anandageethan/bank-ui
+    image: anandageethan/bank-ui:localhost
     ports:
-      - '3000:3000'
+      - '3000:80'
     restart: always
-    environment:
-      REACT_APP_API_BACKEND_URL: "http://localhost:9090"
     depends_on:
       - mysql-service
       - bank-api
