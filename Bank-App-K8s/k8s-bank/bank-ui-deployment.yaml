@@ -16,3 +16,9 @@ spec:
         image: anandageethan/bank-ui:latest
         ports:
         - containerPort: 80
+        env:
+          - name: REACT_APP_API_BASE_URL
+            valueFrom:
+              configMapKeyRef:
+                name: bank-config
+                key: react_app_api_base_url
