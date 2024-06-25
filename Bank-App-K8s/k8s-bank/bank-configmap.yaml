@@ -7,5 +7,6 @@ data:
   mysql_port: '3306'
   mysql_database: claimmanagement
   db_host: 'mysql-cluster-service'
-  allowed_cross_origin: http://localhost:30123
-  react_app_api_base_url: http://localhost/api
+  # allowed_cross_origin: http://localhost:30123
+  # react_app_api_base_url: http://localhost/api
+  react_app_api_base_url: http://34.41.88.73/api
