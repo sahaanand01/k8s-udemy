@@ -8,5 +8,4 @@ data:
   mysql_database: claimmanagement
   db_host: 'mysql-cluster-service'
   allowed_cross_origin: '*'
-  # react_app_api_base_url: http://localhost/api
   react_app_api_base_url: http://104.197.156.201/api
