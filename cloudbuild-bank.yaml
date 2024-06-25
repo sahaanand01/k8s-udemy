@@ -9,4 +9,4 @@ steps:
 substitutions:
   _CLUSTER_NAME: multi-cluster
   _LOCATION: us-central1-c
-  _FILE_PATH: Bank-App-K8s/k8s-bank
+  _FILE_PATH: Bank-App-K8s/prod-k8s-bank
