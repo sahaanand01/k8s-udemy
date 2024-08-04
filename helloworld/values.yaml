@@ -1,7 +1,7 @@
 deployment:
   image: nginx
   port: 80
-  name: client
+  name: nginx
 service:
   type: NodePort
   port: 80
