@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-sql-deployment
+spec:
+  selector:
+    matchLabels:
+      app: mysql
+  template:
+    metadata:
+      labels:
+        app: mysql
+    spec:
+      containers:
+      - name: mysql
+        image: mysql
+        ports:
+        - containerPort: 3306
+        volumeMounts:
+          - name: mysql-storage
+            mountPath: '/var/lib/mysql'
+            subPath: 'mysql'
+
+        env:
+          - name: MYSQL_ROOT_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: bank-secret
+                key: mysql_root_password
+
+          - name: MYSQL_DATABASE
+            valueFrom:
+              configMapKeyRef:
+                name: bank-config
+                key: mysql_database
+
+          - name: MYSQL_USER
+            valueFrom:
+              configMapKeyRef:
+                name: bank-config
+                key: mysql_username
+
+          - name: MYSQL_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: bank-secret
+                key: mysql_password
+                
+      volumes:                                   
+        - name: mysql-storage
+          persistentVolumeClaim: 
+            claimName: mysql-pvc

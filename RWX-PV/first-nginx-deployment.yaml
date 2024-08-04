@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deployment1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: app1
+  template:
+    metadata:
+      labels:
+        app: app1
+    spec:
+      containers:
+      - name: nginx-one
+        image: nginx
+        volumeMounts:
+        - mountPath: /usr/share/nginx/html
+          name: filestore-volume
+          
+      volumes:
+      - name: filestore-volume
+        persistentVolumeClaim:
+          claimName: mypvc

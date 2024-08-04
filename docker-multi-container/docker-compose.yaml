@@ -1,0 +1,49 @@
+version: '3'
+services:
+  
+  postgres:
+    image: postgres
+    environment:
+      - POSTGRES_PASSWORD=password
+  
+  redis:
+    image: redis
+  
+  api:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - PGUSER=postgres
+      - PGHOST=postgres
+      - PGDATABASE=postgres
+      - PGPASSWORD=password
+      - PGPORT=5432
+  
+  worker:
+    build:
+      context: ./worker
+      dockerfile: Dockerfile
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+  
+  client:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+  
+  nginx:
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+      - 4001:80
+    depends_on:
+      - api
+      - client
+
+  

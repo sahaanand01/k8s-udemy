@@ -1,0 +1,54 @@
+steps:
+
+- name: 'gcr.io/cloud-builders/git'
+  args: ['rev-parse', 'HEAD']
+
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['build','-t', 'gcr.io/${_PROJECT_ID}/${_CLIENT_IMAGE_NAME}:latest', '-t', 'gcr.io/${_PROJECT_ID}/${_CLIENT_IMAGE_NAME}:$COMMIT_SHA', '-f', './client/Dockerfile', './client']
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['build','-t', 'gcr.io/${_PROJECT_ID}/${_SERVER_IMAGE_NAME}:latest', '-t', 'gcr.io/${_PROJECT_ID}/${_SERVER_IMAGE_NAME}:$COMMIT_SHA','-f', './server/Dockerfile', './server']
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['build','-t', 'gcr.io/${_PROJECT_ID}/${_WORKER_IMAGE_NAME}:latest', '-t', 'gcr.io/${_PROJECT_ID}/${_WORKER_IMAGE_NAME}:$COMMIT_SHA','-f', './worker/Dockerfile', './worker']
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['build','-t', 'gcr.io/${_PROJECT_ID}/${_REACT_IMAGE_NAME}:latest', '-t', 'gcr.io/${_PROJECT_ID}/${_REACT_IMAGE_NAME}:$COMMIT_SHA', '-f', './k8s-own/react/myapp/Dockerfile','./k8s-own/react/myapp']
+
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['push', 'gcr.io/${_PROJECT_ID}/${_CLIENT_IMAGE_NAME}:latest']
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['push', 'gcr.io/${_PROJECT_ID}/${_CLIENT_IMAGE_NAME}:$COMMIT_SHA']
+
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['push', 'gcr.io/${_PROJECT_ID}/${_SERVER_IMAGE_NAME}:latest']
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['push', 'gcr.io/${_PROJECT_ID}/${_SERVER_IMAGE_NAME}:$COMMIT_SHA']
+
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['push', 'gcr.io/${_PROJECT_ID}/${_WORKER_IMAGE_NAME}:latest']
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['push', 'gcr.io/${_PROJECT_ID}/${_WORKER_IMAGE_NAME}:$COMMIT_SHA']
+
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['push', 'gcr.io/${_PROJECT_ID}/${_REACT_IMAGE_NAME}:latest']
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['push', 'gcr.io/${_PROJECT_ID}/${_REACT_IMAGE_NAME}:$COMMIT_SHA']
+
+# - name: "gcr.io/cloud-builders/gke-deploy"
+#   when: 'exitCode == 0'
+#   args:
+#   - run
+#   - '--filename=${_FILE_PATH}'
+#   - '--location=${_LOCATION}'
+#   - '--cluster=${_CLUSTER_NAME}'
+
+substitutions:
+  _PROJECT_ID: k8s-project-425213
+  _CLIENT_IMAGE_NAME: multi-client
+  _SERVER_IMAGE_NAME: multi-server
+  _WORKER_IMAGE_NAME: multi-worker
+  _REACT_IMAGE_NAME: react-app
+  _CLUSTER_NAME: multi-cluster
+  _LOCATION: us-central1-c
+  _FILE_PATH: k8s
+  # _CLIENT_VERSION: c3.0
+  # _SERVER_VERSION: s3.0
+  # _WORKER_VERSION: w3.0
