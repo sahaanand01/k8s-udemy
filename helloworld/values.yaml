@@ -1,10 +1,10 @@
 deployment:
-  image: hello-world
-  port: 3000
-  name: client
+  image: nginx
+  port: 80
+  name: nginx
 service:
   type: NodePort
-  externalPort: 80
-  internalPort: 3000
+  port: 80
+  targetport: 80
   name: client-nodeport
   
