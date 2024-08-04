@@ -1,0 +1,12 @@
+steps:
+- name: "gcr.io/cloud-builders/gke-deploy"
+  args:
+  - run
+  - '--filename=${_FILE_PATH}'
+  - '--location=${_LOCATION}'
+  - '--cluster=${_CLUSTER_NAME}'
+
+substitutions:
+  _CLUSTER_NAME: multi-cluster
+  _LOCATION: us-central1-c
+  _FILE_PATH: Bank-App-K8s/prod-k8s-bank
