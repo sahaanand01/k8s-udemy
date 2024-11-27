@@ -1,0 +1,14 @@
+applications:
+- name: bank-api
+  image: anandageethan/bank-api:prod
+  containerPort: 8080
+  secretRefName: bank-secret
+  configMapRefName: bank-config
+
+- name: bank-ui
+  image: anandageethan/bank-ui:prod
+  containerPort: 80
+  secretRefName: bank-secret
+  configMapRefName: bank-config
+
+

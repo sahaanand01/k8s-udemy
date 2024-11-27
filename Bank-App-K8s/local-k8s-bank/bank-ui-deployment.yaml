@@ -13,12 +13,11 @@ spec:
     spec:
       containers:
       - name: myapp
-        image: anandageethan/bank-ui:not-localhost
+        image: anandageethan/bank-ui:localhost
         ports:
         - containerPort: 80
-        env:
-          - name: REACT_APP_API_BASE_URL
-            valueFrom:
-              configMapKeyRef:
-                name: bank-config
-                key: react_app_api_base_url
+        envFrom:
+        - secretRef:
+            name: bank-secret
+        - configMapRef:
+            name: bank-config

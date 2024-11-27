@@ -20,31 +20,11 @@ spec:
           - name: mysql-storage
             mountPath: '/var/lib/mysql'
             subPath: 'mysql'
-
-        env:
-          - name: MYSQL_ROOT_PASSWORD
-            valueFrom:
-              secretKeyRef:
-                name: bank-secret
-                key: mysql_root_password
-
-          - name: MYSQL_DATABASE
-            valueFrom:
-              configMapKeyRef:
-                name: bank-config
-                key: mysql_database
-
-          - name: MYSQL_USER
-            valueFrom:
-              configMapKeyRef:
-                name: bank-config
-                key: mysql_username
-
-          - name: MYSQL_PASSWORD
-            valueFrom:
-              secretKeyRef:
-                name: bank-secret
-                key: mysql_password
+        envFrom:
+        - secretRef:
+            name: bank-secret
+        - configMapRef:
+            name: bank-config
                 
       volumes:                                   
         - name: mysql-storage

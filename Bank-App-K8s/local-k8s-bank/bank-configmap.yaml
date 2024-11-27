@@ -3,9 +3,9 @@ kind: ConfigMap
 metadata:
   name: bank-config
 data:
-  mysql_username: anand
-  mysql_port: '3306'
-  mysql_database: claimmanagement
-  db_host: 'mysql-cluster-service'
-  allowed_cross_origin: '*'
-  react_app_api_base_url: http://104.197.156.201/api
+  MYSQL_USER: anand
+  DB_PORT: '3306'
+  MYSQL_DATABASE: claimmanagement
+  DB_HOST: 'mysql-cluster-service'
+  ALLOWED_CROSS_ORIGIN: '*'
+  REACT_APP_API_BASE_URL: http://localhost/api

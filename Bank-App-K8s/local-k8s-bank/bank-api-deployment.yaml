@@ -13,42 +13,11 @@ spec:
     spec:
       containers:
       - name: bank-api
-        image: anandageethan/bank-api:latest
+        image: anandageethan/bank-api:localhost
         ports:
-        - containerPort: 9090
-        env:
-          - name: ALLOWED_CROSS_ORIGIN
-            valueFrom:
-              configMapKeyRef:
-                name: bank-config
-                key: allowed_cross_origin
-
-          - name: DB_HOST
-            valueFrom:
-              configMapKeyRef:
-                name: bank-config
-                key: db_host
-                
-          - name: DB_PORT
-            valueFrom:
-              configMapKeyRef:
-                name: bank-config
-                key: mysql_port
-
-          - name: DB_NAME
-            valueFrom:
-              configMapKeyRef:
-                name: bank-config
-                key: mysql_database
-
-          - name: DB_USERNAME
-            valueFrom:
-              configMapKeyRef:
-                name: bank-config
-                key: mysql_username
-
-          - name: DB_PASSWORD
-            valueFrom:
-              secretKeyRef:
-                name: bank-secret
-                key: mysql_password
+        - containerPort: 8080
+        envFrom:
+        - secretRef:
+            name: bank-secret
+        - configMapRef:
+            name: bank-config

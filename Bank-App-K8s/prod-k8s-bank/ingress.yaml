@@ -32,7 +32,7 @@ spec:
               service:
                 name: bank-api-cluster-service
                 port:
-                  number: 9090
+                  number: 8080
     
     - host: www.gtnrjlkhm.shop
       http:
@@ -51,4 +51,4 @@ spec:
               service:
                 name: bank-api-cluster-service
                 port:
-                  number: 9090
+                  number: 8080
