@@ -1,9 +1,0 @@
-deployment:
-  image: nginx
-  port: 80
-  name: nginx
-service:
-  type: NodePort
-  port: 80
-  targetport: 80
-  name: client-nodeport
